@@ -1,5 +1,5 @@
 # Deploy HA Proxy
-  - Build HA proxy docker image: docker -f HAProxy.Dockerfile build -t haproxy .
+  - Build HA proxy docker image: docker build -f HAProxy.Dockerfile -t haproxy .
   - Verify haproxy config: docker run -it --rm --name haproxy-syntax-check haproxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
   - Run HAProxy container with exposing container port 7000 -> machine port 7000: docker run -d --name haproxy -p 7000:7000 --sysctl net.ipv4.ip_unprivileged_port_start=0 haproxy
   * the name "patroni_cluster" in haproxy.cfg can be edited, but need to change them in patroni.yml later
@@ -7,5 +7,5 @@
 # Deploy ETCD????
 
 # Deploy patroni
-  - Adjust patroni0.yml (this is the patroni configuration file), make sure the scope match haproxy.cfg
-  - Build patroni image by running this command in root directory of repo: docker build -t patroni .
+  - Build docker iamge of patroni: docker build -f patroni.Dockerfile -t patroni --build-arg MASTER_PG_HOST=? --build-arg REPLICA_PG_HOST=? --build- ETCD_HOSTS=? .
+  - Run patron image: docker run -d --name patroni -h patroni -p 8008:8008 -p 5432:5432 -e PGDATA=/var/lib/postgresql/data/PGDATA -e PATRONI_NAME=patroni -e PATRONI_SCOPE=patroni_cluster -e PATRONI_POSTGRESQL_CONNECT_ADDRESS=?:5432 -e PATRONI_RESTAPI_CONNECT_ADDRESS=?:8008 -it patroni
