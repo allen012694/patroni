@@ -1,5 +1,5 @@
 # Deploy HA Proxy
-  - Build HA proxy docker image: docker -f HAProxy.Dockerfile build -t haproxy .
+  - Build HA proxy docker image: docker build -f HAProxy.Dockerfile -t haproxy .
   - Verify haproxy config: docker run -it --rm --name haproxy-syntax-check haproxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
   - Run HAProxy container with exposing container port 7000 -> machine port 7000: docker run -d --name haproxy -p 7000:7000 --sysctl net.ipv4.ip_unprivileged_port_start=0 haproxy
   * the name "patroni_cluster" in haproxy.cfg can be edited, but need to change them in patroni.yml later
