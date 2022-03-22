@@ -1,12 +1,12 @@
 scope: patroni_cluster
 namespace: /db/
-name: postgresql0
+name: patroni_$MASTER_PG_HOST
 
 restapi:
     listen: $MASTER_PG_HOST:8008
     connect_address: $MASTER_PG_HOST:8008
 
-etcd:
+etcd3:
     hosts: $ETCD_HOSTS
 
 bootstrap:
