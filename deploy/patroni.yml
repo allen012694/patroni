@@ -3,7 +3,7 @@ namespace: /db/
 name: patroni_$MASTER_PG_HOST
 
 restapi:
-    listen: $MASTER_PG_HOST:18008
+    listen: 127.0.0.1:18008
     connect_address: $MASTER_PG_HOST:18008
 
 # etcd3:
@@ -40,7 +40,7 @@ bootstrap:
                 - createdb
 
 postgresql:
-    listen: $MASTER_PG_HOST:5432
+    listen: 127.0.0.1:5432
     connect_address: $MASTER_PG_HOST:5432
     data_dir: /data/patroni
     pgpass: /tmp/pgpass
