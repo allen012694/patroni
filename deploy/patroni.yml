@@ -3,8 +3,8 @@ namespace: /db/
 name: patroni_$MASTER_PG_HOST
 
 restapi:
-    listen: 127.0.0.1:18008
-    connect_address: $MASTER_PG_HOST:18008
+    listen: 127.0.0.1:8008
+    connect_address: $MASTER_PG_HOST:8008
 
 # etcd3:
 #     hosts: $ETCD_HOSTS
@@ -26,12 +26,6 @@ bootstrap:
     - encoding: UTF8
     - data-checksums
 
-    pg_hba:
-    - host replication replicator 127.0.0.1/32 md5
-    - host replication replicator $MASTER_PG_HOST/0 md5
-    - host replication replicator $REPLICA_PG_HOST/0 md5
-    - host all all 0.0.0.0/0 md5
-
     users:
         admin:
             password: admin
@@ -44,6 +38,11 @@ postgresql:
     connect_address: $MASTER_PG_HOST:5432
     data_dir: /data/patroni
     pgpass: /tmp/pgpass
+    pg_hba:
+        - host replication replicator 127.0.0.1/32 md5
+        - host replication replicator $MASTER_PG_HOST/0 md5
+        - host replication replicator $REPLICA_PG_HOST/0 md5
+        - host all all 0.0.0.0/0 md5
     authentication:
         replication:
             username: replicator
