@@ -1,10 +1,25 @@
 # Deploy HA Proxy
   - Build HA proxy docker image: docker build -f HAProxy.Dockerfile -t haproxy .
   - Verify haproxy config: docker run -it --rm --name haproxy-syntax-check haproxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg
-  - Run HAProxy container with exposing container port 7000 -> machine port 7000: docker run -d --name haproxy -p 7000:7000 --sysctl net.ipv4.ip_unprivileged_port_start=0 haproxy
+  - Run HAProxy container with exposing container port 7000 -> machine port 7000: docker run -d --name haproxy -p 5000:5000 -p 7000:7000 --sysctl net.ipv4.ip_unprivileged_port_start=0 haproxy
   * the name "patroni_cluster" in haproxy.cfg can be edited, but need to change them in patroni.yml later
 
-# Deploy ETCD????
+# Deploy ETCD
+  - Use etcd 3.5:   docker rmi gcr.io/etcd-development/etcd:v3.5.2
+  - Start single etcd:
+    docker run -d -p 2379:2379 -p 2380:2380 --mount type=bind,source=/tmp/etcd-data.tmp,destination=/etcd-data --name etcd gcr.io/etcd-development/etcd:v3.5.2 /usr/local/bin/etcd \
+      --name et1 \
+      --data-dir /etcd-data \
+      --listen-client-urls http://10.70.12.76:2379 \
+      --advertise-client-urls http://10.70.12.76:2379 \
+      --listen-peer-urls http://10.70.12.76:2380 \
+      --initial-advertise-peer-urls http://10.70.12.76:2380 \
+      --initial-cluster et1=http://10.70.12.76:2380 \
+      --initial-cluster-token tkn \
+      --initial-cluster-state new \
+      --log-level info \
+      --logger zap \
+      --log-outputs stderr --enable-v2
 
 # Deploy patroni
   - Build docker iamge of patroni: docker build -f patroni.Dockerfile -t patroni --build-arg MASTER_PG_HOST=? --build-arg REPLICA_PG_HOST=? --build- ETCD_HOSTS=? .

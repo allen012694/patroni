@@ -6,8 +6,12 @@ restapi:
     listen: $MASTER_PG_HOST:8008
     connect_address: $MASTER_PG_HOST:8008
 
-etcd3:
-    hosts: $ETCD_HOSTS
+# etcd3:
+#     hosts: $ETCD_HOSTS
+
+consul:
+    host: $CONSUL_HOST
+    register_service: true
 
 bootstrap:
     dcs:

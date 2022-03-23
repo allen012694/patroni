@@ -2,7 +2,8 @@ FROM postgres:12
 
 ARG MASTER_PG_HOST
 ARG REPLICA_PG_HOST
-ARG ETCD_HOSTS
+# ARG ETCD_HOSTS
+ARG CONSUL_HOST
 
 
 
@@ -31,6 +32,7 @@ COPY patroni.yml /config/
 # # adjust patroni config
 RUN sed -i s/\$MASTER_PG_HOST/${MASTER_PG_HOST}/g /config/patroni.yml && \
   sed -i s/\$REPLICA_PG_HOST/${REPLICA_PG_HOST}/g /config/patroni.yml && \
-  sed -i s/\$ETCD_HOSTS/${ETCD_HOSTS}/g /config/patroni.yml
+  sed -i s/\$CONSUL_HOST/${CONSUL_HOST}/g /config/patroni.yml
+# sed -i s/\$ETCD_HOSTS/${ETCD_HOSTS}/g /config/patroni.yml
 
 ENTRYPOINT ["patroni", "/config/patroni.yml"]
