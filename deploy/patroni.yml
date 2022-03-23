@@ -3,8 +3,8 @@ namespace: /db/
 name: patroni_$MASTER_PG_HOST
 
 restapi:
-    listen: $MASTER_PG_HOST:8008
-    connect_address: $MASTER_PG_HOST:8008
+    listen: $MASTER_PG_HOST:18008
+    connect_address: $MASTER_PG_HOST:18008
 
 # etcd3:
 #     hosts: $ETCD_HOSTS
