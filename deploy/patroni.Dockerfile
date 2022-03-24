@@ -11,7 +11,7 @@ ARG CONSUL_HOST
 RUN apt-get update && apt-get install -y python3-pip python3-psycopg2 python3-dev g++ curl gosu && \
   ln -sf /usr/bin/python3 /usr/bin/python && \
   python3 -m pip install --upgrade pip setuptools && \
-  python3 -m pip install pyyaml python-dateutil pytz requests python-consul click tzlocal prettytable psutil cdiff
+  python3 -m pip install pyyaml python-dateutil pytz requests python-consul click tzlocal prettytable psutil cdiff kazoo
 
 # # prepare patroni
 # RUN cd /tmp && curl -OL https://github.com/zalando/patroni/archive/v${PATRONI_VERSION}.tar.gz && \
