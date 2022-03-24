@@ -40,7 +40,7 @@ bootstrap:
 postgresql:
     listen: 0.0.0.0:5432
     connect_address: $MASTER_PG_HOST:5432
-    config_dir: $PGCONFIG
+    # config_dir: $PGCONFIG
     data_dir: $PGDATA
     pg_hba:
         - host replication replicator 127.0.0.1/32 md5
