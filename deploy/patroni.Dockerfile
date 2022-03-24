@@ -32,11 +32,11 @@ RUN apt-get update && apt-get install -y python3-pip python3-psycopg2 python3-de
 RUN python3 -m pip install psycopg2-binary python-etcd wheel patroni
 COPY patroni.yml /config/
 # adjust patroni config
-RUN sed -i s/\$MASTER_PG_HOST/${MASTER_PG_HOST}/g /config/patroni/patroni.yml && \
-    sed -i s/\$REPLICA_PG_HOST/${REPLICA_PG_HOST}/g /config/patroni/patroni.yml && \
-    sed -i s/\$CONSUL_HOST/${CONSUL_HOST}/g /config/patroni/patroni.yml && \
-    sed -i s/\$PGCONFIG/${PGCONFIG}/g /config/patroni/patroni.yml && \
-    sed -i s/\$PGDATA/${PGDATA}/g /config/patroni/patroni.yml
+RUN sed -i s/\$MASTER_PG_HOST/${MASTER_PG_HOST}/g /config/patroni.yml && \
+    sed -i s/\$REPLICA_PG_HOST/${REPLICA_PG_HOST}/g /config/patroni.yml && \
+    sed -i s/\$CONSUL_HOST/${CONSUL_HOST}/g /config/patroni.yml && \
+    sed -i s/\$PGCONFIG/${PGCONFIG}/g /config/patroni.yml && \
+    sed -i s/\$PGDATA/${PGDATA}/g /ctroni/patroni.yml
 # sed -i s/\$ETCD_HOSTS/${ETCD_HOSTS}/g /config/patroni.yml
 
 # init some dir
