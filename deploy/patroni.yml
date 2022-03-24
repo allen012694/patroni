@@ -3,7 +3,7 @@ namespace: /db/
 name: patroni_$MASTER_PG_HOST
 
 restapi:
-    listen: 127.0.0.1:8008
+    listen: 0.0.0.0:8008
     connect_address: $MASTER_PG_HOST:8008
 
 # etcd3:
@@ -21,10 +21,14 @@ bootstrap:
         maximum_lag_on_failover: 1048576
         postgresql:
             use_pg_rewind: true
+            parameters:
+                max_connections: 550
+                max_locks_per_transaction: 512
+                max_worker_processes: 27
 
     initdb:
-    - encoding: UTF8
-    - data-checksums
+        - encoding: UTF8
+        - data-checksums
 
     users:
         admin:
@@ -34,10 +38,10 @@ bootstrap:
                 - createdb
 
 postgresql:
-    listen: 127.0.0.1:5432
+    listen: 0.0.0.0:5432
     connect_address: $MASTER_PG_HOST:5432
+    config_dir: /config/patroni
     data_dir: /data/patroni
-    pgpass: /tmp/pgpass
     pg_hba:
         - host replication replicator 127.0.0.1/32 md5
         - host replication replicator $MASTER_PG_HOST/32 md5
