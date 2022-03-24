@@ -41,7 +41,9 @@ RUN sed -i 's|\$MASTER_PG_HOST|'${MASTER_PG_HOST}'|g' /config/patroni.yml && \
 
 # init some dir
 RUN mkdir -p ${PGHOME} ${PGDATA} ${PGCONFIG} && \
-  chown -R 999:999 ${PGHOME} ${PGDATA} && \
+  chown -R postgres:postgres ${PGHOME} ${PGDATA} && \
   chmod -R 777 ${PGHOME} ${PGDATA}
+
+USER postgres
 
 ENTRYPOINT ["patroni", "/config/patroni.yml"]
