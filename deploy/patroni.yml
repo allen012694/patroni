@@ -41,7 +41,7 @@ postgresql:
     listen: 0.0.0.0:5432
     connect_address: $MASTER_PG_HOST:5432
     # config_dir: /config/patroni
-    data_dir: /data/patroni
+    # data_dir: /data/patroni
     pg_hba:
         - host replication replicator 127.0.0.1/32 md5
         - host replication replicator $MASTER_PG_HOST/32 md5
